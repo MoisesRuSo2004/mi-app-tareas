@@ -1,0 +1,137 @@
+:root {
+  --bs-primary: #1d809f;
+  --bs-secondary: #ecb807;
+  --bs-success: #198754;
+  --bs-warning: #ecb807;
+  --bs-danger: #dc3545;
+  --bs-light: #f8f9fa;
+  --bs-dark: #212529;
+}
+
+body {
+  font-family: "Source Sans Pro", sans-serif;
+  background-color: var(--bs-light);
+  color: var(--bs-dark);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar */
+.navbar {
+  background-color: var(--bs-primary);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.navbar-brand,
+.nav-link {
+  color: #fff !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.nav-link.active,
+.nav-link:hover {
+  color: var(--bs-secondary) !important;
+}
+
+/* Header */
+header {
+  background: linear-gradient(90deg, var(--bs-primary), #17667f);
+  color: white;
+  padding: 3rem 0;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+header h1 {
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+header p {
+  color: var(--bs-secondary);
+  font-size: 1.1rem;
+}
+
+/* Botón principal */
+.btn-primary {
+  background-color: var(--bs-primary);
+  border: none;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+  background-color: #17667f;
+  transform: translateY(-2px);
+}
+
+/* Card principal */
+.card {
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Tabla */
+.table thead {
+  background-color: var(--bs-primary);
+  color: #fff;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(29, 128, 159, 0.08);
+}
+
+.badge {
+  font-size: 0.9rem;
+}
+
+/* Botones de acción */
+.btn-warning {
+  background-color: var(--bs-secondary);
+  color: #000;
+  border: none;
+}
+
+.btn-warning:hover {
+  background-color: #d4a706;
+  color: #000;
+}
+
+.btn-danger {
+  background-color: var(--bs-danger);
+  border: none;
+}
+
+.btn-danger:hover {
+  background-color: #b02a37;
+}
+
+/* Footer */
+footer {
+  background-color: var(--bs-primary);
+  color: #fff;
+  text-align: center;
+  padding: 1rem 0;
+  margin-top: auto;
+}
+
+/* Animación */
+.fade-in {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

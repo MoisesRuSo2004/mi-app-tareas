@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestor de Tareas</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      crossorigin="anonymous"
+    />
+
+    <!-- Font Awesome -->
+    <script
+      src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Fuente igual que la landing -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./css/tasks.css" />
+  </head>
+
+  <body class="fade-in">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">Gestor de Tareas</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon text-light"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/tareas">Tareas</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Header -->
+    <header>
+      <div class="container">
+        <h1>Mis Tareas</h1>
+        <p>Organiza, gestiona y completa tus actividades diarias fácilmente</p>
+      </div>
+    </header>
+
+    <!-- Contenido -->
+    <main class="container my-5">
+      <div class="text-center mb-4">
+        <button
+          class="btn btn-primary px-4 py-2 shadow-sm"
+          onclick="window.location.href='/registrar'"
+        >
+          <i class="fa-solid fa-plus me-2"></i>Registrar Nueva Tarea
+        </button>
+      </div>
+
+      <div class="card p-4">
+        <h4 class="text-center text-primary mb-4 fw-bold">Lista de Tareas</h4>
+
+        <div class="table-responsive">
+          <table class="table table-bordered align-middle text-center">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="tarea : ${tareas}">
+                <th scope="row" th:text="${tarea.id}"></th>
+                <td th:text="${tarea.titulo}"></td>
+                <td th:text="${tarea.descripcion}"></td>
+                <td>
+                  <span
+                    class="badge text-uppercase px-3 py-2"
+                    th:classappend="${tarea.estado == 'Completado' ? 'bg-success' : (tarea.estado == 'En progreso' ? 'bg-warning text-dark' : 'bg-secondary')}"
+                    th:text="${tarea.estado}"
+                  >
+                  </span>
+                </td>
+
+                <td th:text="${tarea.fecha}"></td>
+                <td>
+                  <a
+                    th:href="@{'/editar/' + ${tarea.id}}"
+                    class="btn btn-warning btn-sm me-1"
+                  >
+                    <i class="fa-solid fa-pen-to-square"></i>
+                  </a>
+                  <button
+                    class="btn btn-danger btn-sm"
+                    data-bs-toggle="modal"
+                    data-bs-target="#deleteModal"
+                    th:attr="data-id=${tarea.id}"
+                  >
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <!-- Modal de confirmación -->
+    <div
+      class="modal fade"
+      id="deleteModal"
+      tabindex="-1"
+      aria-labelledby="deleteModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title" id="deleteModalLabel">Eliminar tarea</h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Cerrar"
+            ></button>
+          </div>
+          <div class="modal-body text-center">
+            <i
+              class="bi bi-exclamation-triangle-fill text-danger fs-1 mb-3"
+            ></i>
+            <p>
+              ¿Seguro que deseas eliminar esta tarea? Esta acción no se puede
+              deshacer.
+            </p>
+          </div>
+          <div class="modal-footer justify-content-center">
+            <form id="deleteForm" th:action="@{/eliminar/__id__}" method="get">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancelar
+              </button>
+              <button type="submit" class="btn btn-danger">Eliminar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast de eliminación exitosa -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+      <div
+        id="deleteToast"
+        class="toast align-items-center text-white bg-success border-0"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        <div class="d-flex">
+          <div class="toast-body">¡Tarea eliminada con éxito!</div>
+          <button
+            type="button"
+            class="btn-close btn-close-white me-2 m-auto"
+            data-bs-dismiss="toast"
+            aria-label="Close"
+          ></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p class="mb-0">
+        &copy; 2025 Gestor de Tareas | Creado con 💙 por Manito
+      </p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      const deleteModal = document.getElementById("deleteModal");
+      deleteModal.addEventListener("show.bs.modal", (event) => {
+        const button = event.relatedTarget;
+        const id = button.getAttribute("data-id");
+        const form = deleteModal.querySelector("#deleteForm");
+        form.setAttribute("action", `/eliminar/${id}`);
+      });
+    </script>
+
+    <script>
+      // Mostrar toast si hay un parámetro en la URL ?deleted=true
+      window.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get("deleted") === "true") {
+          const toastEl = document.getElementById("deleteToast");
+          const toast = new bootstrap.Toast(toastEl);
+          toast.show();
+        }
+      });
+    </script>
+  </body>
+</html>
