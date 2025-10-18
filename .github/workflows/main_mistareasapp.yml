@@ -27,11 +27,16 @@ jobs:
       - name: Build with Maven (skip tests)
         run: mvn clean package -DskipTests
 
+      - name: Create startup.txt
+        run: echo java -jar mistareasapp.jar > startup.txt
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: "${{ github.workspace }}/target/*.jar"
+          path: |
+            target/mistareasapp.jar
+            startup.txt
 
   deploy:
     runs-on: windows-latest
@@ -49,5 +54,5 @@ jobs:
         with:
           app-name: "mistareasapp"
           slot-name: "Production"
-          package: "*.jar"
+          package: .
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E1853FBD0B934F05AE6305DBE4A6F26B }}
