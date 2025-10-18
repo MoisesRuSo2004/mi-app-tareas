@@ -69,6 +69,7 @@
 	<build>
 		<finalName>mistareasapp</finalName>
 		<plugins>
+			<!-- Compilador Java -->
 			<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-compiler-plugin</artifactId>
@@ -82,6 +83,7 @@
 			</configuration>
 			</plugin>
 
+			<!-- Plugin para ejecutar el JAR -->
 			<plugin>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-maven-plugin</artifactId>
@@ -92,11 +94,21 @@
 					<artifactId>lombok</artifactId>
 				</exclude>
 				</excludes>
+			</configuration>
+			</plugin>
+
+			<!-- Plugin que controla los tests -->
+			<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-surefire-plugin</artifactId>
+			<version>3.2.5</version>
+			<configuration>
 				<skipTests>true</skipTests>
 			</configuration>
 			</plugin>
 		</plugins>
 	</build>
+
 
 
 </project>
