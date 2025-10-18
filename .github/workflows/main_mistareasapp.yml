@@ -30,8 +30,8 @@ jobs:
       - name: Move JAR to root
         run: move target\mistareasapp.jar mistareasapp.jar
 
-      - name: Create startup.txt
-        run: echo java -jar mistareasapp.jar > startup.txt
+      - name: Create startup.cmd
+        run: echo java -jar mistareasapp.jar > startup.cmd
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -39,7 +39,7 @@ jobs:
           name: java-app
           path: |
             mistareasapp.jar
-            startup.txt
+            startup.cmd
 
   deploy:
     runs-on: windows-latest
