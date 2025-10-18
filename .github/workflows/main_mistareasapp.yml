@@ -31,7 +31,10 @@ jobs:
         run: move target\mistareasapp.jar mistareasapp.jar
 
       - name: Create startup.cmd
-        run: echo java -jar mistareasapp.jar > startup.cmd
+        run: |
+          echo java -jar mistareasapp.jar > startup.cmd
+          type startup.cmd
+          powershell -Command "Get-Content startup.cmd | Set-Content -Encoding ASCII startup.cmd"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
