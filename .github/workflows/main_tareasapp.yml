@@ -59,4 +59,4 @@ jobs:
         with:
           app-name: "tareasapp"
           slot-name: "Production"
-          package: "${{ github.workspace }}/target/mistareasapp.jar"
+          package: "*.jar"
