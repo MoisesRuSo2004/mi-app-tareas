@@ -21,14 +21,14 @@ public class TareasController {
     @GetMapping("/")
     public String home() {
         // Devuelve el nombre de la vista que está en templates/bienvenido.html
-        return "/html/index";
+        return "html/index";
     }
 
     @GetMapping("/tareas")
     public String getTareas(Model model) {
         List<Tareas> tareas = tareasService.getAllTareas();
         model.addAttribute("tareas", tareas);
-        return "/html/tasks";
+        return "html/tasks";
     }
 
     @GetMapping("/registrar")
@@ -48,7 +48,7 @@ public class TareasController {
     public String editarTarea(@PathVariable Long id, Model model) {
         Tareas tarea = tareasService.getTareaById(id);
         model.addAttribute("tarea", tarea);
-        return "/html/register"; // reutilizamos la misma vista de register
+        return "html/register"; // reutilizamos la misma vista de register
     }
 
     // Procesar actualización
